@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 
 const main = async () => {
-    const demoId = "e0e1ef3b-b65f-47ab-90e0-6bba32685061";
+    const demoId = "58a15510-77a3-430b-961e-cc8b9aaaf728";
 
     // Create sample products
     await prisma.product.createMany({

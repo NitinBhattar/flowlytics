@@ -3,6 +3,17 @@
 import { getUser } from "../auth";
 import prisma from "../prisma"
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
+
+// Checks data, if any invalid value in entered, it throws an error
+const ProductSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    price: z.coerce.number().nonnegative("Price must be non-negative"),
+    quantity: z.coerce.number().int().min(0, "Quantity must be non-negative"),
+    sku: z.string().optional(),
+    lowStockAt: z.coerce.number().int().min(0).optional(),
+});
+
 
 const deleteProduct = async (formData: FormData) => {
     const user = await getUser();
@@ -19,6 +30,31 @@ const deleteProduct = async (formData: FormData) => {
 }
 
 const createProduct = async (formData: FormData) => {
+    const user = await getUser();
+    const userId = user?.id;
+
+    const parsed = ProductSchema.safeParse({
+        name: formData.get("name"),
+        price: formData.get("price"),
+        quantity: formData.get("quantity"),
+        sku: formData.get("sku") || undefined,
+        lowStockAt: formData.get("lowStockAt") || undefined
+    });
+
+    if (!parsed.success) {
+        throw new Error("Validation failed");
+    }
+
+    try {
+        await prisma.product.create({data: { ...parsed.data, userId: user.id }});
+        revalidatePath("/inventory");
+    }
+    catch(error) {
+        console.error(error);
+        throw new Error("Failed to create product.");
+    }
+
+    return;
 }
 
 export {deleteProduct, createProduct};

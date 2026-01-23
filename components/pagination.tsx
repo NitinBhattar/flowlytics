@@ -53,14 +53,15 @@ const Pagination = ({currentPage, totalPages, baseUrl, searchParams}: Pagination
         <nav className="flex items-center justify-center gap-1">
             <Link
                 href={getPageUrl(currentPage - 1)}
-                className={`flex items-center px-3 py-2 text-black text-sm font-medium rounded-lg
+                className={`flex items-center border border-black! px-3 py-2 text-black text-sm font-medium rounded-lg
                             ${currentPage <= 1
                             ? "text-gray-400 cursor-not-allowed bg-gray-100"
                             : "text-gray-700 hover:bg-gray-100 bg-white"}
                         `}
                 aria-disabled={currentPage <= 1}
             >
-                <ChevronLeft /> Previous
+                <ChevronLeft /> 
+                <span className="hidden md:block">Previous</span>
             </Link>
 
             {
@@ -94,14 +95,15 @@ const Pagination = ({currentPage, totalPages, baseUrl, searchParams}: Pagination
 
             <Link
                 href={getPageUrl(currentPage + 1)}
-                className={`flex items-center text-black px-3 py-2 text-sm font-medium rounded-lg
+                className={`flex items-center border border-black! text-black px-3 py-2 text-sm font-medium rounded-lg
                             ${currentPage >= totalPages
                             ? "text-gray-400 cursor-not-allowed bg-gray-100"
                             : "text-gray-700 hover:bg-gray-100 bg-white"}
                         `}
                 aria-disabled={currentPage >= totalPages}
             >
-                <ChevronRight /> Next
+                <span className="hidden md:block">Next</span>
+                <ChevronRight />
             </Link>
         </nav>
     )

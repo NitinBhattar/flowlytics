@@ -61,7 +61,7 @@ const inventory = async ({searchParams}: {searchParams: Promise<{q?: string, pag
                     <div className="w-full overflow-scroll hide-scrollbar">
                         {/* Search Bar */}
                         <div className="w-full bg-white rounded-lg p-6">
-                            <form className="flex gap-2" action="/inventory" method="GET">
+                            <form className="flex flex-col sm:flex-row gap-2 w-full" action="/inventory" method="GET">
                                 <input
                                     name="q"
                                     placeholder="Search for products..."
@@ -92,23 +92,23 @@ const inventory = async ({searchParams}: {searchParams: Promise<{q?: string, pag
                                     items.map((product, key) => {
                                         return (
                                             <tr key={key} className="hover:bg-gray-50">
-                                                <td className="px-6 py-4 text-sm text-gray-500">
+                                                <td className="px-6 py-4 text-sm text-gray-700">
                                                     {product.name}
                                                 </td>
 
-                                                <td className="px-6 py-4 text-sm text-gray-500">
+                                                <td className="px-6 py-4 text-sm text-gray-700">
                                                     {product.sku || '-'}
                                                 </td>
 
-                                                <td className="px-6 py-4 text-sm text-gray-500">
+                                                <td className="px-6 py-4 text-sm text-gray-700">
                                                     {product.price.toFixed(2)}
                                                 </td>
 
-                                                <td className="px-6 py-4 text-sm text-gray-500">
+                                                <td className="px-6 py-4 text-sm text-gray-700">
                                                     {product.quantity}
                                                 </td>
 
-                                                <td className="px-6 py-4 text-sm text-gray-500">
+                                                <td className="px-6 py-4 text-sm text-gray-700">
                                                     {product.lowStockAt || "default(5)"}
                                                 </td>
 
